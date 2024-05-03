@@ -17,6 +17,10 @@ https://huggingface.co/openbmb/MiniCPM-V-2
 https://www.bentoml.com/blog/a-guide-to-open-source-image-generation-models
 https://stable-diffusion-art.com/install-mac/
 
+All of Wikipedia
+https://dumps.wikimedia.org/commonswiki/20240420/
+https://library.kiwix.org/#lang=eng&q=wikipedia
+
 ### todo/investigate
 
 InvokeAI, Automatic1111, Draw Things, Diffusers, DiffusionBee
@@ -31,7 +35,15 @@ https://github.com/Stability-AI/StableCascade
 https://github.com/apple/corenet
 https://github.com/PygmalionAI/aphrodite-engine
 https://github.com/myshell-ai/OpenVoice
-https://github.com/ggerganov/whisper.cpp
+https://github.com/truefoundry/cognita
+
+#### https://github.com/ggerganov/whisper.cpp
+
+* The README has the info for this one. 
+* I downloaded the "large-v3" model with the script.
+* So now I do ./main -f samples/jfk.wav -m models/ggml-large-v3.bin 
+* Or I can do the microphone input thing
+* You can do STT with all the major cloud providers, AWS, Azure, GCP as well
 
 ### serving
 
@@ -46,18 +58,34 @@ https://github.com/lavague-ai/LaVague
 
 ## things to install
 
-ollama
-lmstudio
-pinokio
+https://ollama.com
+https://lmstudio.ai
+https://pinokio.computer
 
 ## models
 
-phi3
-llama3
-mixtral
-llava
-codellama
-openchat
-gemma
-nexusraven
-tinyllama
+### chat
+
+https://ollama.com/library/phi3
+https://ollama.com/library/llama3
+https://ollama.com/library/openchat
+https://ollama.com/library/gemma
+https://ollama.com/library/nexusraven
+https://ollama.com/library/tinyllama
+https://ollama.com/library/starling-lm
+
+### code
+
+https://ollama.com/library/codegemma
+https://ollama.com/library/codellama
+https://ollama.com/library/phind-codellama
+
+### moe
+
+https://ollama.com/library/wizardlm2
+https://ollama.com/library/mixtral
+
+### image
+
+https://ollama.com/library/llava
+https://ollama.com/library/bakllava
