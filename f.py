@@ -12,9 +12,10 @@ from ollama import AsyncClient
 
 # GPT_MODEL: str = "mixtral:8x7b-instruct-v0.1-q6_K"
 GPT_MODEL: str = "mixtral:8x22b-instruct"
+HOST: str = "http://localhost:11434"
 
 async def valid_model(model: str) -> bool:
-    response = await AsyncClient().list()
+    response = await AsyncClient(host=HOST).list()
     models = [i["name"] for i in response["models"]]
     return (model in models)
 
@@ -23,7 +24,7 @@ async def chat(
 ) -> dict[str, str]:
     if not await valid_model(model):
         return {}
-    response = await AsyncClient().generate(model=model, prompt=prompt, stream=False)
+    response = await AsyncClient(host=HOST).generate(model=model, prompt=prompt, stream=False)
     print(prompt)
     print(response)
     return json.loads(response["response"])
