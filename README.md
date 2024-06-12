@@ -4,7 +4,8 @@ playing around with AI
 
 ## hardware
 
-macbook pro m2 max 64gb 1tb early 2023 used, ebay, $2400
+macbook pro m2 max 64gb 1tb early 2023 used, ebay, $2400 in early 2024
+Run: sudo sysctl iogpu.wired\_limit\_mb=57344
 
 ## notes/links
 

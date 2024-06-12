@@ -24,11 +24,17 @@ Use:
 
 SYSTEM_PROMPT: str = "You are a concise artificial intelligence chat bot. You provide clear answers that are easy to read and digest generally under 50 words."
 HOST: str = "http://localhost:11434"
+MAX_SIZE: int = 40000000000
+MAX_PARAMETER_SIZE: int = 40
 DEBUG: bool = True
 
-async def valid_model(model: str) -> bool:
+async def get_model_list(embed: bool = False, max_size: int = MAX_SIZE, max_parameters: int = MAX_PARAMETER_SIZE) -> list[str]:
     response = await ola(host=HOST).list()
-    models = [i["model"] for i in response["models"]]
+    models = [i["model"] for i in response["models"] if (embed or "embed" not in i["model"]) and i["size"] < max_size and ("M" in i["details"]["parameter_size"] or float(i["details"]["parameter_size"].lower().replace("b", "")) < max_parameters)]
+    return models
+
+async def valid_model(model: str) -> bool:
+    models = await get_model_list()
     if model not in models:
         print("You must pick one of these models:")
         print("\n".join(models))
@@ -40,8 +46,7 @@ async def chat(model: str = "phi3:mini", prompt: str = "Why is the sky blue?", r
         return
     models = [model]
     if model == "ALL":
-        out = await ola(host=HOST).list()
-        models = [i["model"] for i in out["models"]]
+        models = await get_model_list()
     print(f"Using prompt: {prompt}")
     for run in range(runs):
         for i in models:
