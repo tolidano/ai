@@ -2,7 +2,7 @@ import asyncio
 from sys import argv
 import time
 
-from ollama import AsyncClient as ola
+from ollama import AsyncClient as ola, Client as ol
 
 """
 Async client to interact with local Ollama models
@@ -23,14 +23,26 @@ Use:
 """
 
 SYSTEM_PROMPT: str = "You are a concise artificial intelligence chat bot. You provide clear answers that are easy to read and digest generally under 50 words."
-HOST: str = "http://localhost:11434"
-MAX_SIZE: int = 40000000000
-MAX_PARAMETER_SIZE: int = 40
+HOST: str = "http://localhost:22434"
+MAX_SIZE: int = 50000000000
+MAX_PARAMETER_SIZE: int = 75
 DEBUG: bool = True
 
 async def get_model_list(embed: bool = False, max_size: int = MAX_SIZE, max_parameters: int = MAX_PARAMETER_SIZE) -> list[str]:
-    response = await ola(host=HOST).list()
-    models = [i["model"] for i in response["models"] if (embed or "embed" not in i["model"]) and i["size"] < max_size and ("M" in i["details"]["parameter_size"] or float(i["details"]["parameter_size"].lower().replace("b", "")) < max_parameters)]
+    response: dict[str, any] = await ola(host=HOST).list()
+    models: list[str] = []
+    for i in response["models"]:
+        m: str = i["model"]
+        if not embed and "embed" in m:
+            continue
+        if "size" in i and i["size"] > max_size:
+            continue
+        param_size: int = 0
+        if "details" in i and "parameter_size" in i["details"] and "M" not in i["details"]["parameter_size"] and i["details"]["parameter_size"]:
+            param_size = float(i["details"]["parameter_size"].lower().replace("b", ""))
+        if param_size > max_parameters:
+            continue
+        models.append(m)
     return models
 
 async def valid_model(model: str) -> bool:
@@ -42,6 +54,10 @@ async def valid_model(model: str) -> bool:
     return True
 
 async def chat(model: str = "phi3:mini", prompt: str = "Why is the sky blue?", runs: int = 1):
+    stream: bool = True
+    if "22" in HOST:
+        stream = False
+        print("No streaming on ovai")
     if model != "ALL" and not await valid_model(model):
         return
     models = [model]
@@ -62,12 +78,16 @@ async def chat(model: str = "phi3:mini", prompt: str = "Why is the sky blue?", r
                     'role': 'user',
                     'content': prompt,
                 },
-            ], stream=True)
+            ], stream=stream)
             diff = 0
-            async for chunk in response:
-                print(chunk['message']['content'], end='', flush=True)
-                if diff == 0:
-                    diff = round(time.time() - start, 3)
+            if stream:
+                async for chunk in response:
+                    print(chunk["message"]["content"], end="", flush=True)
+                    if diff == 0:
+                        diff = round(time.time() - start, 3)
+            else:
+                print(response["message"]["content"])
+                diff = round(time.time() - start, 3)
             total = round(time.time() - start, 3)
             difftot = round(total - diff, 3)
             if DEBUG:

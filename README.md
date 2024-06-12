@@ -98,7 +98,6 @@ https://github.com/truefoundry/cognita
 https://github.com/microsoft/semantic-kernel
 https://github.com/vllm-project/vllm
 https://github.com/BerriAI/litellm
-https://github.com/prantlf/ovai
 
 ### automation
 
@@ -121,6 +120,18 @@ for n in `ollama list | rg -v minut | rg -v NAME | cut -f1`; do echo "$n - Start
 ```
 
 ## models
+
+### google cloud
+
+gemini flash
+
+#### requirements
+
+pip install google-cloud-aiplatform
+https://github.com/prantlf/ovai/releases/
+https://stackoverflow.com/questions/46287267/how-can-i-get-the-file-service-account-json-for-google-translate-api
+put .json in this folder
+remove the auth\_uri field
 
 ### chat
 
