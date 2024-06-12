@@ -2,10 +2,10 @@ import asyncio
 from sys import argv
 import time
 
-from ollama import AsyncClient as ola, Client as ol
+from ollama import AsyncClient as ola
 
 """
-Async client to interact with local Ollama models
+Async client to interact with local Ollama and GCP gemini models
 
 Needs:
     python3 -m pip install ollama
@@ -23,14 +23,15 @@ Use:
 """
 
 SYSTEM_PROMPT: str = "You are a concise artificial intelligence chat bot. You provide clear answers that are easy to read and digest generally under 50 words."
-HOST: str = "http://localhost:22434"
+GEMINI_HOST: str = "http://localhost:22434"
+LOCAL_HOST: str = "http://localhost:11434"
 MAX_SIZE: int = 50000000000
 MAX_PARAMETER_SIZE: int = 75
 DEBUG: bool = True
 
 async def get_model_list(embed: bool = False, max_size: int = MAX_SIZE, max_parameters: int = MAX_PARAMETER_SIZE) -> list[str]:
-    response: dict[str, any] = await ola(host=HOST).list()
-    models: list[str] = []
+    response: dict[str, any] = await ola(host=LOCAL_HOST).list()
+    models: list[str] = ["gemini-1.5-flash-001"]
     for i in response["models"]:
         m: str = i["model"]
         if not embed and "embed" in m:
@@ -54,10 +55,6 @@ async def valid_model(model: str) -> bool:
     return True
 
 async def chat(model: str = "phi3:mini", prompt: str = "Why is the sky blue?", runs: int = 1):
-    stream: bool = True
-    if "22" in HOST:
-        stream = False
-        print("No streaming on ovai")
     if model != "ALL" and not await valid_model(model):
         return
     models = [model]
@@ -66,10 +63,15 @@ async def chat(model: str = "phi3:mini", prompt: str = "Why is the sky blue?", r
     print(f"Using prompt: {prompt}")
     for run in range(runs):
         for i in models:
+            stream: bool = True
+            host: str = LOCAL_HOST
+            if "gemini" in i:
+                stream = False
+                host = GEMINI_HOST
             start = time.time()
             if DEBUG:
                 print("*" * 10 + i + "*" * 10)
-            response = await ola(host=HOST).chat(model=i, messages=[
+            response = await ola(host=host).chat(model=i, messages=[
                 {
                     'role': 'system',
                     'content': SYSTEM_PROMPT,
