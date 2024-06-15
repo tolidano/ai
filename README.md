@@ -132,6 +132,7 @@ https://github.com/prantlf/ovai/releases/
 https://stackoverflow.com/questions/46287267/how-can-i-get-the-file-service-account-json-for-google-translate-api
 put .json in this folder
 remove the auth\_uri field
+https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/configure-safety-attributes#google-cloud-console
 
 ### chat
 
