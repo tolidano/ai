@@ -7,6 +7,17 @@ playing around with AI
 macbook pro m2 max 64gb 1tb early 2023 used, ebay, $2400 in early 2024
 Run: sudo sysctl iogpu.wired\_limit\_mb=57344
 
+## plan
+
+https://www.octomind.dev/blog/why-we-no-longer-use-langchain-for-building-our-ai-agents
+I was considering LangChain, but no.
+I was running Ollama and ovai locally, but there is no need to run ovai for maximum versatility.
+LiteLLM supports almost everything, and vLLM supports the rest (specifically LoRA).
+Not all inference servers support all LLMs.
+Function calling is a property of the model, both support it.
+Vision is supported in multiple ways, but running a local image server is probably required.
+So get keys for everything, set up examples with LiteLLM, and build a small parallel/serial call stack
+
 ## notes/links
 
 https://medium.com/@tubelwj/introduction-to-ai-model-quantization-formats-dc643bfc335c

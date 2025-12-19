@@ -31,7 +31,7 @@ DEBUG: bool = True
 
 async def get_model_list(embed: bool = False, max_size: int = MAX_SIZE, max_parameters: int = MAX_PARAMETER_SIZE) -> list[str]:
     response: dict[str, any] = await ola(host=LOCAL_HOST).list()
-    models: list[str] = ["gemini-1.5-flash-001"]
+    models: list[str] = ["gemini-2.0-flash-exp"]  # ["gemini-1.5-flash-001"]
     for i in response["models"]:
         m: str = i["model"]
         if not embed and "embed" in m:
@@ -60,8 +60,13 @@ async def chat(model: str = "phi3:mini", prompt: str = "Why is the sky blue?", r
     models = [model]
     if model == "ALL":
         models = await get_model_list()
-    print(f"Using prompt: {prompt}")
+    print(f"Prompt: {prompt}")
+    prompt_messages: list[dict[str, str]] = [{
+        "role": "user",
+        "content": prompt,
+    }]
     for run in range(runs):
+        print("*" * 20 + " Run " + str(run + 1) + "*" * 20)
         for i in models:
             stream: bool = True
             host: str = LOCAL_HOST
@@ -75,12 +80,7 @@ async def chat(model: str = "phi3:mini", prompt: str = "Why is the sky blue?", r
                 {
                     'role': 'system',
                     'content': SYSTEM_PROMPT,
-                },
-                {
-                    'role': 'user',
-                    'content': prompt,
-                },
-            ], stream=stream)
+                }] + prompt_messages, stream=stream)
             diff = 0
             if stream:
                 async for chunk in response:
@@ -108,7 +108,6 @@ async def run():
         runs = int(argv[1])
         model = argv[2]
         prompt = argv[3]
-    print(model)
     await chat(model=model, prompt=prompt, runs=runs)
 
 asyncio.run(run())
