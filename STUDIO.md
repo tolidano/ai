@@ -32,3 +32,13 @@ https://huggingface.co/sentence-transformers
 https://huggingface.co/BAAI/bge-m3
 https://github.com/filipstrand/mflux
 https://medium.com/@tchpnk/z-image-turbo-comfyui-on-apple-silicon-2026-0aa78d05132d
+https://huggingface.co/cross-encoder
+https://docling-project.github.io/docling/getting\_started/installation/#ocr-engines
+https://github.com/OHF-Voice/piper1-gpl
+https://github.com/KoljaB/RealtimeTTS
+https://docs.openwebui.com/getting-started/env-configuration/
+https://github.com/ILikeAI/AlwaysReddy
+https://github.com/Mintplex-Labs/anything-llm?tab=readme-ov-file
+https://github.com/open-webui/open-webui
+https://github.com/comfyanonymous/ComfyUI
+https://github.com/AUTOMATIC1111/stable-diffusion-webui
