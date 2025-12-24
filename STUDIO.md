@@ -17,7 +17,6 @@ skald https://blog.yakkomajuri.com/blog/local-rag
 qdrant https://qdrant.tech/documentation/guides/installation/#docker
 koboldcpp
 
-
 podman:
 tried, but colima good enough
 
@@ -69,6 +68,7 @@ https://huggingface.co/sentence-transformers
 image gen:
 https://github.com/comfyanonymous/ComfyUI
 - pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu
+- https://www.reddit.com/r/comfyui/comments/17iwi7p/comfyui\_manager\_on\_mac/
 https://github.com/AUTOMATIC1111/stable-diffusion-webui
 https://medium.com/@tchpnk/z-image-turbo-comfyui-on-apple-silicon-2026-0aa78d05132d
 https://www.bentoml.com/blog/a-guide-to-open-source-image-generation-models
