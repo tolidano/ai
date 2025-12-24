@@ -1,4 +1,7 @@
 limit and lwm plists
+oh-my-zsh / p10k
+lm studio
+- download mlx models
 postgresapp
 - add bin to zshrc
 brew app list
@@ -6,18 +9,29 @@ brew app list
 - pyenv, install pypy 3.11
 - pip install pipx
 - pipx install open-webui
-podman
-- set up 6 GB VM
-colima start --cpu 4 --memory 6 --disk 15
-lm studio
+- open-webui serve (8080)
+- remove openai, add lmstudio
+- datasets==3.6.0
+- set up audio
 skald https://blog.yakkomajuri.com/blog/local-rag
 qdrant https://qdrant.tech/documentation/guides/installation/#docker
 koboldcpp
 
 
+podman:
+tried, but colima good enough
+
+colima:
+colima start --network-address --network-mode bridged --cpu 4 --memory 6 --disk 15
+
 headscale:
 https://headscale.net/stable/setup/install/container/
 could not get it running, kept failing on a socket chmod
+tried with pure local binary, but stopped in favor of...
+
+openvpn:
+took the free 2-connection setup (can replace with the community kylemanna version)
+had to fiddle with colima, but now works
 
 unsorted:
 https://github.com/rishikanthc/Scriberr
@@ -30,12 +44,22 @@ https://github.com/Mintplex-Labs/anything-llm?tab=readme-ov-file
 models:
 https://huggingface.co/mlx-community/models?sort=likes
 https://huggingface.co/collections/mlx-community/qwen3-vl
+- downloaded the 30b
 https://huggingface.co/collections/mlx-community/qwen3-coder-moe
 https://huggingface.co/collections/mlx-community/qwen3-next
+- downloaded the 80b
 https://huggingface.co/collections/mlx-community/gpt-oss
+- downloaded 20b and 120b
+
+agents:
+https://github.com/mudler/LocalAGI
+
+RAG/memory:
+https://github.com/mudler/LocalRecall
 
 ui:
 https://github.com/open-webui/open-webui
+https://github.com/mudler/LocalAI
 
 encoders:
 https://huggingface.co/cross-encoder
@@ -44,6 +68,7 @@ https://huggingface.co/sentence-transformers
 
 image gen:
 https://github.com/comfyanonymous/ComfyUI
+- pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu
 https://github.com/AUTOMATIC1111/stable-diffusion-webui
 https://medium.com/@tchpnk/z-image-turbo-comfyui-on-apple-silicon-2026-0aa78d05132d
 https://www.bentoml.com/blog/a-guide-to-open-source-image-generation-models
