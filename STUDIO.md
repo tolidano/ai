@@ -1,4 +1,5 @@
 limit and lwm plists
+stop machine from sleeping
 oh-my-zsh / p10k
 lm studio
 - download mlx models
@@ -6,22 +7,23 @@ postgresapp
 - add bin to zshrc
 brew app list
 - rust, unlink py3.14
-- pyenv, install pypy 3.11
+- pyenv, install pypy 3.11 and python 3.11 and python 3.13
 - pip install pipx
 - pipx install open-webui
 - open-webui serve (8080)
 - remove openai, add lmstudio
 - datasets==3.6.0
-- set up audio
-skald https://blog.yakkomajuri.com/blog/local-rag
-qdrant https://qdrant.tech/documentation/guides/installation/#docker
+- set up audio, see settings (model downloaded, not optimal, lots of fiddling)
+- set up image (ComfyUI first, then connect, copy settings from z-image turbo workflow)
 koboldcpp
+
 
 podman:
 tried, but colima good enough
 
 colima:
 colima start --network-address --network-mode bridged --cpu 4 --memory 6 --disk 15
+need network-address and bridged to allow access on the same 192.168.1.0/24 space
 
 headscale:
 https://headscale.net/stable/setup/install/container/
@@ -30,7 +32,8 @@ tried with pure local binary, but stopped in favor of...
 
 openvpn:
 took the free 2-connection setup (can replace with the community kylemanna version)
-had to fiddle with colima, but now works
+had to fiddle with colima (see above), but now works (not openvpn specific problem)
+running on phone and laptop
 
 unsorted:
 https://github.com/rishikanthc/Scriberr
@@ -55,6 +58,9 @@ https://github.com/mudler/LocalAGI
 
 RAG/memory:
 https://github.com/mudler/LocalRecall
+skald https://blog.yakkomajuri.com/blog/local-rag
+qdrant https://qdrant.tech/documentation/guides/installation/#docker
+https://docling-project.github.io/docling/examples/rag\_milvus/#a-recipe
 
 ui:
 https://github.com/open-webui/open-webui
@@ -68,19 +74,27 @@ https://huggingface.co/sentence-transformers
 image gen:
 https://github.com/comfyanonymous/ComfyUI
 - pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu
+- validate with import torch;print(torch.backends.mps.is\_available())
 - https://www.reddit.com/r/comfyui/comments/17iwi7p/comfyui\_manager\_on\_mac/
-https://github.com/AUTOMATIC1111/stable-diffusion-webui
 https://medium.com/@tchpnk/z-image-turbo-comfyui-on-apple-silicon-2026-0aa78d05132d
 https://www.bentoml.com/blog/a-guide-to-open-source-image-generation-models
+z-image turbo on comfyUI, dev mode, exported API workflow to open webui uploader, copied node numbers, set steps 20
 
 doc parsing:
 https://docling-project.github.io/docling/getting\_started/installation/#ocr-engines
+pip install docling and docling[tesserocr] (needs tesseract)
+docling-tools models download
+pip install "docling-serve[ui]"
+https://github.com/docling-project/docling-serve
+docling-serve run --enable-ui
+TODO: run with image description services: https://github.com/docling-project/docling-serve/blob/main/docs/usage.md
 
 browser use:
 https://docs.browser-use.com/supported-models#ollama
 
 instagram:
 https://instaloader.github.io/basic-usage.html
+pip install instaloader
 
 voice ai:
 https://github.com/eustlb/speech-to-speech
